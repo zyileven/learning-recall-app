@@ -4,26 +4,7 @@ import { BookOpen, RefreshCw, Flame, CheckCircle } from 'lucide-react';
 import { useCardsStore } from '../store/cardsStore';
 import { Card, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
-import { getDailyStats, getSessions } from '../lib/storage';
-
-function getStreak(sessions: ReturnType<typeof getSessions>): number {
-  if (!sessions.length) return 0;
-  const dates = [...new Set(sessions.map((s) => s.date.split('T')[0]))].sort().reverse();
-  let streak = 0;
-  const today = new Date().toISOString().split('T')[0];
-  let check = today;
-  for (const date of dates) {
-    if (date === check) {
-      streak++;
-      const prev = new Date(check);
-      prev.setDate(prev.getDate() - 1);
-      check = prev.toISOString().split('T')[0];
-    } else {
-      break;
-    }
-  }
-  return streak;
-}
+import { getDailyStats, getStreak } from '../lib/storage';
 
 export function DashboardPage() {
   const navigate = useNavigate();
@@ -37,7 +18,7 @@ export function DashboardPage() {
   const todayStats = getDailyStats().find(
     (s) => s.date === new Date().toISOString().split('T')[0]
   );
-  const streak = getStreak(getSessions());
+  const streak = getStreak();
 
   const statsItems = [
     {

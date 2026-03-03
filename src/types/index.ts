@@ -19,10 +19,11 @@ export interface KnowledgeCard {
 
 export interface StudySession {
   id: string;
-  date: string;
-  cardIds: string[];
+  date: string;           // ISO 日期
+  cardsReviewed: number;
+  totalScore: number;
   duration: number;       // 秒
-  reviewedCount: number;
+  cardResults: Array<{ cardId: string; score: number }>;
 }
 
 export interface FeynmanNote {

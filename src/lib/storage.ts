@@ -100,6 +100,38 @@ export function saveSession(session: StudySession): void {
   set(KEYS.SESSIONS, sessions);
 }
 
+export function getStreak(): number {
+  const sessions = getSessions();
+  if (!sessions.length) return 0;
+
+  // 按日期去重、排序（降序）
+  const dates = [...new Set(
+    sessions.map((s) => s.date.split('T')[0])
+  )].sort().reverse();
+
+  let streak = 0;
+  const today = new Date().toISOString().split('T')[0];
+  // 今天或昨天作为起点
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+  let check: string = dates[0] === today || dates[0] === yesterdayStr ? dates[0] : '';
+  if (!check) return 0;
+
+  for (const date of dates) {
+    if (date === check) {
+      streak++;
+      const prevDate = new Date(check);
+      prevDate.setDate(prevDate.getDate() - 1);
+      check = prevDate.toISOString().split('T')[0];
+    } else {
+      break;
+    }
+  }
+  return streak;
+}
+
 // ─── Feynman Notes ─────────────────────────────────────────────────────────
 
 export function getFeynmanNotes(): FeynmanNote[] {
