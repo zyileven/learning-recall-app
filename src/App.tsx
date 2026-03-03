@@ -7,9 +7,10 @@ import { CardDetailPage } from './pages/knowledge/CardDetailPage';
 import { ReviewPage } from './pages/review/ReviewPage';
 import { RecallSelectPage } from './pages/recall/RecallSelectPage';
 import { RecallSessionPage } from './pages/recall/RecallSessionPage';
+import { FeynmanListPage } from './pages/feynman/FeynmanListPage';
+import { FeynmanSessionPage } from './pages/feynman/FeynmanSessionPage';
 import { StatsPage } from './pages/StatsPage';
 import { SettingsPage } from './pages/SettingsPage';
-import { PlaceholderPage } from './pages/PlaceholderPage';
 
 export default function App() {
   return (
@@ -32,17 +33,9 @@ export default function App() {
           <Route path="recall" element={<RecallSelectPage />} />
           <Route path="recall/session" element={<RecallSessionPage />} />
 
-          {/* Feynman (placeholder) */}
-          <Route
-            path="feynman"
-            element={
-              <PlaceholderPage
-                title="费曼学习法"
-                description="用简单语言解释复杂概念，发现理解漏洞"
-              />
-            }
-          />
-          <Route path="feynman/:id" element={<Navigate to="/feynman" replace />} />
+          {/* Feynman */}
+          <Route path="feynman" element={<FeynmanListPage />} />
+          <Route path="feynman/:id" element={<FeynmanSessionPage />} />
 
           {/* Stats */}
           <Route path="stats" element={<StatsPage />} />

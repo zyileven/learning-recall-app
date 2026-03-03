@@ -29,7 +29,12 @@ export interface StudySession {
 export interface FeynmanNote {
   id: string;
   cardId: string;
-  explanation: string;
+  explanation: string;      // 步骤 1 的初次解释
+  answers: Array<{          // 步骤 2 的引导问题回答
+    question: string;
+    answer: string;
+  }>;
+  selfRating: number;       // 自评分 0/2/4/5
   createdAt: string;
   updatedAt: string;
 }
