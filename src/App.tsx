@@ -5,6 +5,8 @@ import { KnowledgePage } from './pages/knowledge/KnowledgePage';
 import { CardFormPage } from './pages/knowledge/CardFormPage';
 import { CardDetailPage } from './pages/knowledge/CardDetailPage';
 import { ReviewPage } from './pages/review/ReviewPage';
+import { RecallSelectPage } from './pages/recall/RecallSelectPage';
+import { RecallSessionPage } from './pages/recall/RecallSessionPage';
 import { StatsPage } from './pages/StatsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
@@ -23,19 +25,12 @@ export default function App() {
           <Route path="knowledge/:id" element={<CardDetailPage />} />
           <Route path="knowledge/:id/edit" element={<CardFormPage mode="edit" />} />
 
-          {/* Review */}
+          {/* Review (SM-2) */}
           <Route path="review" element={<ReviewPage />} />
 
-          {/* Active Recall (placeholder) */}
-          <Route
-            path="recall"
-            element={
-              <PlaceholderPage
-                title="主动回忆"
-                description="在查看答案前，先尝试自己回忆知识点"
-              />
-            }
-          />
+          {/* Active Recall */}
+          <Route path="recall" element={<RecallSelectPage />} />
+          <Route path="recall/session" element={<RecallSessionPage />} />
 
           {/* Feynman (placeholder) */}
           <Route
