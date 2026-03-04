@@ -71,8 +71,9 @@ export function saveCategories(categories: string[]): void {
 const defaultSettings: UserSettings = {
   reminderEnabled: false,
   reminderTime: '09:00',
+  reminderMode: 'daily',
   theme: 'system',
-  reminderFrequency: 'daily',
+  onboardingDone: false,
 };
 
 export function getSettings(): UserSettings {
@@ -181,3 +182,46 @@ export function updateTodayStats(patch: Partial<Omit<DailyStats, 'date'>>): void
   }
   set(KEYS.STATS, all);
 }
+
+// ─── Data export / import / clear ──────────────────────────────────────────
+
+const ALL_KEYS = Object.values(KEYS);
+
+export function exportAllData(): string {
+  const data: Record<string, unknown> = {};
+  for (const key of ALL_KEYS) {
+    const raw = localStorage.getItem(key);
+    if (raw !== null) {
+      try { data[key] = JSON.parse(raw); } catch { data[key] = raw; }
+    }
+  }
+  return JSON.stringify(data, null, 2);
+}
+
+export function importAllData(json: string): void {
+  const data = JSON.parse(json) as Record<string, unknown>;
+  for (const key of ALL_KEYS) {
+    if (key in data) {
+      localStorage.setItem(key, JSON.stringify(data[key]));
+    }
+  }
+}
+
+export function clearAllData(): void {
+  for (const key of ALL_KEYS) {
+    localStorage.removeItem(key);
+  }
+}
+
+// ─── Due-notified today flag ────────────────────────────────────────────────
+
+const DUE_NOTIFIED_KEY = 'lr_due_notified_date';
+
+export function hasDueNotifiedToday(): boolean {
+  return localStorage.getItem(DUE_NOTIFIED_KEY) === new Date().toISOString().split('T')[0];
+}
+
+export function markDueNotifiedToday(): void {
+  localStorage.setItem(DUE_NOTIFIED_KEY, new Date().toISOString().split('T')[0]);
+}
+

@@ -29,3 +29,14 @@ export function formatRelativeDate(isoString: string): string {
   if (diffDays < 0) return `${Math.abs(diffDays)} 天前`;
   return `${diffDays} 天后`;
 }
+
+/**
+ * Apply theme to document root element.
+ * Persists 'dark' class on <html> for Tailwind dark mode.
+ */
+export function applyTheme(theme: 'light' | 'dark' | 'system'): void {
+  const root = document.documentElement;
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark = theme === 'dark' || (theme === 'system' && prefersDark);
+  root.classList.toggle('dark', isDark);
+}

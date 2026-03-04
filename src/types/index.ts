@@ -41,9 +41,10 @@ export interface FeynmanNote {
 
 export interface UserSettings {
   reminderEnabled: boolean;
-  reminderTime: string;   // HH:mm 格式
+  reminderTime: string;           // "HH:MM"
+  reminderMode: 'daily' | 'daily+due';
   theme: 'light' | 'dark' | 'system';
-  reminderFrequency: 'daily' | 'due-only';
+  onboardingDone: boolean;
 }
 
 export interface DailyStats {
